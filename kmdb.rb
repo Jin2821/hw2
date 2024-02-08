@@ -260,9 +260,11 @@ puts ""
 
 movies = Movie.where ({"studio_id" => warner["id"]})
 
+
 for movie in movies
-    puts "#{movie["title"]} #{movie["year_released"]} #{movie["rated"]}"
+    puts "#{movie["title"]} #{movie["year_released"]} #{movie["rated"]} #{warner["name"]} "
 end
+
 
 # Prints a header for the cast output
 puts ""
@@ -270,12 +272,16 @@ puts "Top Cast"
 puts "========"
 puts ""
 
-# Query the cast data and loop through the results to display the cast output for each movie.
-# TODO!
-
-actors = Actor.all
 roles = Role.all
 
 for role in roles
-    puts "#{movies["title"]} #{actors["name"]} #{role["character_name"]}"
+    movie = Movie.find_by({"id" => role["movie_id"]})
+    movie_title = movie ["title"]
+    actor = Actor.find_by({"id" => role["actor_id"]})
+    actor_name = actor["name"]
+    puts "#{movie_title} #{actor_name} #{role["character_name"]}"
 end
+
+# Query the cast data and loop through the results to display the cast output for each movie.
+# TODO!
+
