@@ -74,9 +74,181 @@
 # Generate models and tables, according to the domain model.
 # TODO!
 
+
+
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
+
+Studio.destroy_all
+Movie.destroy_all
+Actor.destroy_all
+Role.destroy_all
+
+warner = Studio.new
+warner ["name"] = "Warner Bros."
+warner.save
+
+
+batmanbegins = Movie.new
+batmanbegins ["title"]="Batman Begins"
+batmanbegins["year_released"]=2005
+batmanbegins["rated"]="PG-13"
+batmanbegins["studio_id"]= warner.id
+batmanbegins.save
+
+darkknight = Movie.new
+darkknight ["title"]="The Dark Knight"
+darkknight["year_released"]=2008
+darkknight["rated"]="PG-13"
+darkknight["studio_id"]= warner.id
+darkknight.save
+
+dkrises = Movie.new
+dkrises ["title"]="The Dark Knight Rises"
+dkrises["year_released"]=20012
+dkrises["rated"]="PG-13"
+dkrises["studio_id"]= warner.id
+dkrises.save
+
+
+# -- Batman Begins
+
+bale = Actor.new
+bale ["name"]="Christian Bale"
+bale.save
+
+caine = Actor.new
+caine ["name"]="Michael Caine"
+caine.save
+
+neeson = Actor.new
+neeson ["name"]="Liam Neeson"
+neeson.save
+
+holmes = Actor.new
+holmes ["name"]="Katie Holmes"
+holmes.save
+
+oldman = Actor.new
+oldman ["name"]="Gary Oldman"
+oldman.save
+
+wayne = Role.new
+wayne ["movie_id"]= batmanbegins.id
+wayne ["actor_id"]= bale.id
+wayne ["character_name"]="Bruce Wayne"
+wayne.save
+
+alfred = Role.new
+alfred ["movie_id"]= batmanbegins.id
+alfred ["actor_id"]= caine.id
+alfred ["character_name"]="Alfred"
+alfred.save
+
+ghul = Role.new
+ghul ["movie_id"]= batmanbegins.id
+ghul ["actor_id"]= neeson.id
+ghul ["character_name"]="Ra's Al Ghul"
+ghul.save
+
+dawes = Role.new
+dawes ["movie_id"]= batmanbegins.id
+dawes ["actor_id"]= holmes.id
+dawes ["character_name"]="Rachel Dawes"
+dawes.save
+
+gordon = Role.new
+gordon ["movie_id"]= batmanbegins.id
+gordon ["actor_id"]= oldman.id
+gordon ["character_name"]="Commissioner Gordon"
+gordon.save
+
+# -- The Dark Knight
+ledger = Actor.new
+ledger ["name"]="Heath Ledger"
+ledger.save
+
+eckhart = Actor.new
+eckhart ["name"]="Aaron Eckhart"
+eckhart.save
+
+gyllenhaal = Actor.new
+gyllenhaal ["name"]="Maggie Gyllenhaal"
+gyllenhaal.save
+
+wayne2 = Role.new
+wayne2 ["movie_id"]= darkknight.id
+wayne2 ["actor_id"]= bale.id
+wayne2 ["character_name"]="Bruce Wayne"
+wayne2.save
+
+joker = Role.new
+joker ["movie_id"]= darkknight.id
+joker ["actor_id"]= ledger.id
+joker ["character_name"]="Jocker"
+joker.save
+
+dent = Role.new
+dent ["movie_id"]= darkknight.id
+dent ["actor_id"]= eckhart.id
+dent ["character_name"]="Harvey Dent"
+dent.save
+
+alfred2 = Role.new
+alfred2 ["movie_id"]= darkknight.id
+alfred2 ["actor_id"]= caine.id
+alfred2 ["character_name"]="Alfred"
+alfred2.save
+
+dawes2 = Role.new
+dawes2 ["movie_id"]= darkknight.id
+dawes2 ["actor_id"]= holmes.id
+dawes2 ["character_name"]="Rachel Dawes"
+dawes2.save
+
+# -- The Dark Knight Rises
+hardy = Actor.new
+hardy ["name"]="Tom Hardy"
+hardy.save
+
+levitt = Actor.new
+levitt ["name"]="Joseph Gordon-Levitt"
+levitt.save
+
+hathaway = Actor.new
+hathaway ["name"]="Anne Hathaway"
+hathaway.save
+
+wayne3 = Role.new
+wayne3 ["movie_id"]= dkrises.id
+wayne3 ["actor_id"]= bale.id
+wayne3 ["character_name"]="Bruce Wayne"
+wayne3.save
+
+gordon2 = Role.new
+gordon2 ["movie_id"]= dkrises.id
+gordon2 ["actor_id"]= oldman.id
+gordon2 ["character_name"]="Commissioner Gordon"
+gordon2.save
+
+bane = Role.new
+bane ["movie_id"]= dkrises.id
+bane ["actor_id"]= hardy.id
+bane ["character_name"]="Bane"
+bane.save
+
+blake = Role.new
+blake ["movie_id"]= dkrises.id
+blake ["actor_id"]= levitt.id
+blake ["character_name"]="John Blake"
+blake.save
+
+kyle = Role.new
+kyle ["movie_id"]= dkrises.id
+kyle ["actor_id"]= hathaway.id
+kyle ["character_name"]="Selina Kyle"
+kyle.save
 
 # Prints a header for the movies output
 puts "Movies"
@@ -86,6 +258,12 @@ puts ""
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
 
+movies = Movie.where ({"studio_id" => warner["id"]})
+
+for movie in movies
+    puts "#{movie["title"]} #{movie["year_released"]} #{movie["rated"]}"
+end
+
 # Prints a header for the cast output
 puts ""
 puts "Top Cast"
@@ -94,3 +272,10 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+
+actors = Actor.all
+roles = Role.all
+
+for role in roles
+    puts "#{movies["title"]} #{actors["name"]} #{role["character_name"]}"
+end
